@@ -1,4 +1,4 @@
-package com.example.android.pets.data;
+package com.example.android.product.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

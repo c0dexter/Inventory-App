@@ -9,8 +9,8 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<manifest package="com.example.android.pets"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.android.product">
 
     <application
         android:allowBackup="true"
@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".CatalogActivity"
+            android:name="com.example.android.product.CatalogActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,8 +28,8 @@
         </activity>
         <activity
             android:name=".EditorActivity"
-            android:theme="@style/EditorTheme"
-            android:parentActivityName=".CatalogActivity">
+            android:parentActivityName=".CatalogActivity"
+            android:theme="@style/EditorTheme">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -37,8 +37,8 @@
         </activity>
 
         <provider
-            android:name=".data.PetProvider"
-            android:authorities="com.example.android.pets"
+            android:name="com.example.android.product.data.PetProvider"
+            android:authorities="com.example.android.product"
             android:exported="false" />
     </application>
 
