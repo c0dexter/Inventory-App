@@ -18,7 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.android.product.data.PetContract.PetEntry;
+import com.example.android.product.data.ProductContract.ProductEntry;
 
 /**
  * Displays list of products that were entered and stored in the app.
@@ -27,8 +27,8 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
 
     public static final String LOG_TAG = CatalogActivity.class.getSimpleName();
 
-    private static final int PET_LOADER = 0;
-    PetCursorAdapter mCursorAdapter;
+    private static final int PRODUCT_LOADER = 0;
+    ProductCursorAdapter mCursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
 
         // Setup an Adapter to create a list item for each row of product data in the Cursor.
         // There is no product data yest (until the loader finishes) so pass in null for theCursor
-        mCursorAdapter = new PetCursorAdapter(this, null);
+        mCursorAdapter = new ProductCursorAdapter(this, null);
         productListView.setAdapter(mCursorAdapter);
 
         // Setup item click listener
@@ -67,12 +67,13 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
 
                 // From the content URI that represents the specific product that was clicked on,
                 // by appending "id" (passed as input to this method) onto the PerEntry#CONTENT_URI
-                // For example, the URI would be "content://com.example.android.products/products/2"
+                // For example, the URI would be "content://com.example.android.products/product/2"
                 // if the product with ID 2 was clicked on
-                Uri currentPetUri = ContentUris.withAppendedId(PetEntry.CONTENT_URI, id);
+                Uri currentProductUri = ContentUris.withAppendedId(ProductEntry.CONTENT_URI, id);
+                Log.i(LOG_TAG, "Current URI: " + currentProductUri);
 
                 // Set the URI on the data field of the intent
-                intent.setData(currentPetUri);
+                intent.setData(currentProductUri);
 
                 // Launch the EditorActivity to display the data for the current product
                 startActivity(intent);
@@ -81,7 +82,7 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
 
 
         // Kick off the loader
-        getSupportLoaderManager().initLoader(PET_LOADER, null, this);
+        getSupportLoaderManager().initLoader(PRODUCT_LOADER, null, this);
 
     }
 
@@ -95,21 +96,25 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
     }
 
 
-    private void insertPet() {
+    private void insertProduct() {
 
         // Create a ContentValues object where column names are the keys,
-        // and Toto's product attributes are the values.
+        // and example's product attributes are the values.
         ContentValues values = new ContentValues();
-        values.put(PetEntry.COLUMN_PET_NAME, "Toto");
-        values.put(PetEntry.COLUMN_PET_BREED, "Terrier");
-        values.put(PetEntry.COLUMN_PET_GENDER, PetEntry.GENDER_MALE);
-        values.put(PetEntry.COLUMN_PET_WEIGHT, 7);
+        values.put(ProductEntry.COLUMN_PRODUCT_NAME, "Sony");
+        values.put(ProductEntry.COLUMN_PRODUCT_MODEL, "DMC-J34AL");
+        values.put(ProductEntry.COLUMN_PRODUCT_GRADE, ProductEntry.GRADE_NEW);
+        values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, 7);
+        values.put(ProductEntry.COLUMN_PRODUCT_PICTURE, "picture");
+        values.put(ProductEntry.COLUMN_SUPPLIER_EMAIL, "test@mail.com");
+        values.put(ProductEntry.COLUMN_SUPPLIER_NAME, "Pan Bronek");
+        values.put(ProductEntry.COLUMN_PRODUCT_PRICE, 5);
 
         // Insert a new row for Toto into the provider using the ContentResolver.
-        // Use the {@link PetEntry#CONTENT_URI} to indicate that we want to insert
+        // Use the {@link ProductEntry#CONTENT_URI} to indicate that we want to insert
         // into the products database table.
         // Receive the new content URI that will allow us to access Toto's data in the future.
-        Uri newUri = getContentResolver().insert(PetEntry.CONTENT_URI, values);
+        Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
     }
 
     @Override
@@ -118,11 +123,11 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
         switch (item.getItemId()) {
             // Respond to a click on the "Insert dummy data" menu option
             case R.id.action_insert_dummy_data:
-                insertPet();
+                insertProduct();
                 return true;
             // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
-                deleteAllPets();
+                deleteAllProducts();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -133,24 +138,26 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
 
         // Define a projection that specifies the columns from the table we care about
         String[] projection = {
-                PetEntry._ID,
-                PetEntry.COLUMN_PET_NAME,
-                PetEntry.COLUMN_PET_BREED
+                ProductEntry._ID,
+                ProductEntry.COLUMN_PRODUCT_NAME,
+                ProductEntry.COLUMN_PRODUCT_MODEL,
+                ProductEntry.COLUMN_PRODUCT_QUANTITY,
+                ProductEntry.COLUMN_PRODUCT_PRICE //TODO: zobacz ziomek, czy coś jeszcze ma być na Liście (ListView) wyswietlone
         };
 
         // This loader will execute the ContentProvider's query method ona background thread
-        return new CursorLoader(this,   // Parent avtivity context
-                PetEntry.CONTENT_URI,   // Provider content URI to query
-                projection,             // Columns to include in the resulting Cursor
-                null,                   // No selection clause
-                null,                   // No selection arguments
-                null                    // Default sort order
+        return new CursorLoader(this,       // Parent activity context
+                ProductEntry.CONTENT_URI,   // Provider content URI to query
+                projection,                 // Columns to include in the resulting Cursor
+                null,                       // No selection clause
+                null,                       // No selection arguments
+                null                        // Default sort order
         );
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        // Update {@link PetCursorAdapter} with this new cursor containing updated product data
+        // Update {@link ProductCursorAdapter} with this new cursor containing updated product data
         mCursorAdapter.swapCursor(data);
     }
 
@@ -163,8 +170,8 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
     /**
      * Helper method to delete all products in the database.
      */
-    private void deleteAllPets() {
-        int rowsDeleted = getContentResolver().delete(PetEntry.CONTENT_URI, null, null);
+    private void deleteAllProducts() {
+        int rowsDeleted = getContentResolver().delete(ProductEntry.CONTENT_URI, null, null);
         Log.v("CatalogActivity", rowsDeleted + " rows deleted from product database");
     }
 }

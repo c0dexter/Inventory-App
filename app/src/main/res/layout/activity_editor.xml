@@ -25,93 +25,195 @@
 
         <!-- Label -->
         <TextView
-            android:text="@string/category_overview"
-            style="@style/CategoryStyle" />
+            style="@style/CategoryStyle"
+            android:text="@string/product_name" />
 
         <!-- Input fields -->
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:paddingLeft="4dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="4dp">
 
             <!-- Name field -->
             <EditText
                 android:id="@+id/edit_product_name"
+                style="@style/EditorFieldStyle"
                 android:hint="@string/hint_product_name"
-                android:inputType="textCapWords"
-                style="@style/EditorFieldStyle" />
+                android:inputType="textCapWords" />
 
-            <!-- Breed field -->
+            <!-- Model field -->
             <EditText
-                android:id="@+id/edit_product_breed"
-                android:hint="@string/hint_product_breed"
-                android:inputType="textCapWords"
-                style="@style/EditorFieldStyle" />
+                android:id="@+id/edit_product_model"
+                style="@style/EditorFieldStyle"
+                android:hint="Model no."
+                android:inputType="textCapWords" />
+
+            <!-- E-mail field -->
+            <EditText
+                android:id="@+id/edit_product_price"
+                style="@style/EditorFieldStyle"
+                android:hint="$28.99"
+                android:inputType="number" />
+
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Gender category -->
+
+    <!-- Image section -->
     <LinearLayout
-        android:id="@+id/container_gender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <!-- Label -->
         <TextView
-            android:text="@string/category_gender"
-            style="@style/CategoryStyle" />
+            style="@style/CategoryStyle"
+            android:text="@string/product_photo" />
+
+        <!-- Photo -->
+        <ImageView
+            android:id="@+id/edit_product_photo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:minHeight="130dp"
+            android:maxHeight="140dp"
+            android:paddingLeft="4dp"
+            android:scaleType="centerInside"
+            tools:background="@drawable/ic_empty_storehouse" />
+
+    </LinearLayout>
+
+    <!-- Grade category -->
+    <LinearLayout
+        android:id="@+id/container_grade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Label -->
+        <TextView
+            style="@style/CategoryStyle"
+            android:text="@string/product_grade" />
 
         <!-- Input field -->
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
             android:orientation="vertical">
 
-            <!-- Gender drop-down spinner -->
+            <!-- Grade drop-down spinner -->
             <Spinner
-                android:id="@+id/spinner_gender"
-                android:layout_height="48dp"
+                android:id="@+id/spinner_grade"
                 android:layout_width="wrap_content"
+                android:layout_height="48dp"
                 android:paddingRight="16dp"
                 android:spinnerMode="dropdown" />
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Measurement category -->
+    <!-- Supplier Section -->
     <LinearLayout
-        android:id="@+id/container_measurement"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <!-- Label -->
+        <!-- Label Supplier -->
         <TextView
-            android:text="@string/category_measurement"
-            style="@style/CategoryStyle" />
+            style="@style/CategoryStyle"
+            android:text="@string/supplier" />
 
         <!-- Input fields -->
-        <RelativeLayout
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
+            android:orientation="vertical"
             android:paddingLeft="4dp">
 
-            <!-- Weight field -->
+            <!-- Name field -->
             <EditText
-                android:id="@+id/edit_product_weight"
-                android:hint="@string/hint_product_weight"
-                android:inputType="number"
-                style="@style/EditorFieldStyle" />
+                android:id="@+id/edit_product_supplier_name"
+                style="@style/EditorFieldStyle"
+                android:hint="@string/hint_supplier_name"
+                android:inputType="textCapWords" />
 
-            <!-- Units for weight (kg) -->
-            <TextView
-                android:id="@+id/label_weight_units"
-                android:text="@string/unit_product_weight"
-                style="@style/EditorUnitsStyle" />
-        </RelativeLayout>
+            <!-- E-mail field -->
+            <EditText
+                android:id="@+id/edit_product_supplier_email"
+                style="@style/EditorFieldStyle"
+                android:hint="@string/hint_email_supplier"
+                android:inputType="textCapWords" />
+        </LinearLayout>
     </LinearLayout>
+
+    <!-- Measurement category -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/container_measurement"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <!-- Label -->
+            <TextView
+                style="@style/CategoryStyle"
+                android:text="@string/category_measurement" />
+
+            <!-- Input fields -->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:paddingLeft="4dp">
+
+                <!-- Quantity field -->
+                <EditText
+                    android:id="@+id/edit_product_quantity"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/hint_product_quantity"
+                    android:inputType="number" />
+
+                <!-- Units for amount -->
+                <TextView
+                    android:id="@+id/label_amount_units"
+                    style="@style/EditorUnitsStyle"
+                    android:text="@string/unit_product_quantity" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="Reject product"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/addButtonColor"
+                android:text="Add Product"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 </LinearLayout>

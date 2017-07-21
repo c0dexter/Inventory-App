@@ -29,34 +29,34 @@
     <string name="action_delete">Delete</string>
 
     <!-- Label for overview category of attributes in the editor [CHAR LIMIT=30] -->
-    <string name="category_overview">Overview</string>
+    <string name="product_name">Product</string>
 
-    <!-- Label for gender information in the editor [CHAR LIMIT=30] -->
-    <string name="category_gender">Gender</string>
+    <!-- Label for grade information in the editor [CHAR LIMIT=30] -->
+    <string name="product_grade">Product grade</string>
 
     <!-- Label for measurement information in the editor [CHAR LIMIT=30] -->
     <string name="category_measurement">Measurement</string>
 
     <!-- Text hint for name field in the editor [CHAR LIMIT=30] -->
-    <string name="hint_product_name">Name</string>
+    <string name="hint_product_name">Product name</string>
 
-    <!-- Text hint for breed field in the editor [CHAR LIMIT=30] -->
-    <string name="hint_product_breed">Breed</string>
+    <!-- Text hint for model field in the editor [CHAR LIMIT=30] -->
+    <string name="hint_product_model">Model</string>
 
     <!-- Text hint for name field in the editor [CHAR LIMIT=30] -->
-    <string name="hint_product_weight">Weight</string>
+    <string name="hint_product_quantity">Quantity</string>
 
     <!-- Units for weight of the product (kilograms) [CHAR LIMIT=5] -->
-    <string name="unit_product_weight">kg</string>
+    <string name="unit_product_quantity">pcs</string>
 
-    <!-- Label for dropdown menu option if the product's gender is unknown [CHAR LIMIT=20] -->
-    <string name="gender_unknown">Unknown</string>
+    <!-- Label for dropdown menu option if the product's grade is unknown [CHAR LIMIT=20] -->
+    <string name="grade_unknown">Unknown</string>
 
     <!-- Label for dropdown menu option if the product is male [CHAR LIMIT=20] -->
-    <string name="gender_male">Male</string>
+    <string name="grade_new">New</string>
 
     <!-- Label for dropdown menu option if the product is female [CHAR LIMIT=20] -->
-    <string name="gender_female">Female</string>
+    <string name="grade_used">Used</string>
 
     <!-- Toast message in editor when new product has been successfully inserted [CHAR LIMIT=NONE] -->
     <string name="editor_insert_product_successful">Item saved</string>
@@ -69,7 +69,7 @@
 
     <!-- Subtitle text for the empty view that prompts the user to add a product [CHAR LIMIT=50] -->
     <string name="empty_view_subtitle_text">Get started by adding an item</string>
-    <string name="editor_activity_title_edit_product">Edit Pet</string>
+    <string name="editor_activity_title_edit_product">Edit Product</string>
 
     <!-- Toast message in editor when current product was successfully updated [CHAR LIMIT=NONE] -->
     <string name="editor_update_product_successful">Item updated</string>
@@ -101,7 +101,11 @@
     <!-- Dialog button text for the option to cancel deletion of the current product [CHAR LIMIT=20] -->
     <string name="cancel">Cancel</string>
 
-    <!-- Label for the product's breed if the breed is unknown [CHAR LIMIT=20] -->
-    <string name="unknown_breed">Unknown type</string>
+    <!-- Label for the product's model if the model is unknown [CHAR LIMIT=20] -->
+    <string name="unknown_model">Unknown type</string>
+    <string name="product_photo">Photo</string>
+    <string name="supplier">Supplier</string>
+    <string name="hint_supplier_name">John Doe</string>
+    <string name="hint_email_supplier">john.doe@supplier.com</string>
 
 </resources>

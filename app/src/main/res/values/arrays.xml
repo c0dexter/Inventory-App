@@ -10,10 +10,10 @@
      limitations under the License.
 -->
 <resources>
-    <!-- These are the options displayed in the gender drop-down Spinner -->
-    <string-array name="array_gender_options">
-        <item>@string/gender_unknown</item>
-        <item>@string/gender_male</item>
-        <item>@string/gender_female</item>
+    <!-- These are the options displayed in the grade drop-down Spinner -->
+    <string-array name="array_grade_options">
+        <item>@string/grade_unknown</item>
+        <item>@string/grade_new</item>
+        <item>@string/grade_used</item>
     </string-array>
 </resources>

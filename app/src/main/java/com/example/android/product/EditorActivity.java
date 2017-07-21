@@ -38,7 +38,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.android.product.data.PetContract.PetEntry;
+import com.example.android.product.data.ProductContract.ProductEntry;
 
 /**
  * Allows user to create a new product or edit an existing one.
@@ -49,12 +49,12 @@ public class EditorActivity extends AppCompatActivity implements
     /**
      * Identifier for the product data loader
      */
-    private static final int EXISTING_PET_LOADER = 0;
+    private static final int EXISTING_PRODUCT_LOADER = 0;
 
     /**
      * Content URI for the existing product (null if it's a new product)
      */
-    private Uri mCurrentPetUri;
+    private Uri mCurrentProductUri;
 
     /**
      * EditText field to enter the product's name
@@ -62,40 +62,40 @@ public class EditorActivity extends AppCompatActivity implements
     private EditText mNameEditText;
 
     /**
-     * EditText field to enter the product's breed
+     * EditText field to enter the product's model
      */
-    private EditText mBreedEditText;
+    private EditText mModelEditText;
 
     /**
-     * EditText field to enter the product's weight
+     * EditText field to enter the product's quantity
      */
-    private EditText mWeightEditText;
+    private EditText mQuantityEditText;
 
     /**
-     * EditText field to enter the product's gender
+     * EditText field to enter the product's grade
      */
-    private Spinner mGenderSpinner;
+    private Spinner mGradeSpinner;
 
     /**
-     * Gender of the product. The possible valid values are in the PetContract.java file:
-     * {@link PetEntry#GENDER_UNKNOWN}, {@link PetEntry#GENDER_MALE}, or
-     * {@link PetEntry#GENDER_FEMALE}.
+     * Grade of the product. The possible valid values are in the ProductContract.java file:
+     * {@link ProductEntry#GRADE_UNKNOWN}, {@link ProductEntry#GRADE_NEW}, or
+     * {@link ProductEntry#GRADE_USED}.
      */
-    private int mGender = PetEntry.GENDER_UNKNOWN;
+    private int mGrade = ProductEntry.GRADE_UNKNOWN;
 
     /**
      * Boolean flag that keeps track of whether the product has been edited (true) or not (false)
      */
-    private boolean mPetHasChanged = false;
+    private boolean mProductHasChanged = false;
 
     /**
      * OnTouchListener that listens for any user touches on a View, implying that they are modifying
-     * the view, and we change the mPetHasChanged boolean to true.
+     * the view, and we change the mProductHasChanged boolean to true.
      */
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            mPetHasChanged = true;
+            mProductHasChanged = true;
             return false;
         }
     };
@@ -109,71 +109,72 @@ public class EditorActivity extends AppCompatActivity implements
         // Examine the intent that was used to launch this activity,
         // in order to figure out if we're creating a new product or editing an existing one.
         Intent intent = getIntent();
-        mCurrentPetUri = intent.getData();
+        mCurrentProductUri = intent.getData();
 
         // If the intent DOES NOT contain a product content URI, then we know that we are
         // creating a new product.
-        if (mCurrentPetUri == null) {
-            // This is a new product, so change the app bar to say "Add a Pet"
+        if (mCurrentProductUri == null) {
+            // This is a new product, so change the app bar to say "Add a Product"
             setTitle(getString(R.string.editor_activity_title_new_product));
 
             // Invalidate the options menu, so the "Delete" menu option can be hidden.
             // (It doesn't make sense to delete a product that hasn't been created yet.)
             invalidateOptionsMenu();
         } else {
-            // Otherwise this is an existing product, so change app bar to say "Edit Pet"
+            // Otherwise this is an existing product, so change app bar to say "Edit Product"
             setTitle(getString(R.string.editor_activity_title_edit_product));
 
             // Initialize a loader to read the product data from the database
             // and display the current values in the editor
-            getLoaderManager().initLoader(EXISTING_PET_LOADER, null, this);
+            getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, this);
         }
 
-        // Find all relevant views that we will need to read user input from
+        // Find all relevant views that we will need to read user input from //TODO: Zmapuj ziomeczQ kolejne pola z ekranu edycji
         mNameEditText = (EditText) findViewById(R.id.edit_product_name);
-        mBreedEditText = (EditText) findViewById(R.id.edit_product_breed);
-        mWeightEditText = (EditText) findViewById(R.id.edit_product_weight);
-        mGenderSpinner = (Spinner) findViewById(R.id.spinner_gender);
+        mModelEditText = (EditText) findViewById(R.id.edit_product_model);
+        mQuantityEditText = (EditText) findViewById(R.id.edit_product_quantity);
+        mGradeSpinner = (Spinner) findViewById(R.id.spinner_grade);
+
 
         // Setup OnTouchListeners on all the input fields, so we can determine if the user
         // has touched or modified them. This will let us know if there are unsaved changes
         // or not, if the user tries to leave the editor without saving.
         mNameEditText.setOnTouchListener(mTouchListener);
-        mBreedEditText.setOnTouchListener(mTouchListener);
-        mWeightEditText.setOnTouchListener(mTouchListener);
-        mGenderSpinner.setOnTouchListener(mTouchListener);
+        mModelEditText.setOnTouchListener(mTouchListener);
+        mQuantityEditText.setOnTouchListener(mTouchListener);
+        mGradeSpinner.setOnTouchListener(mTouchListener);
 
         setupSpinner();
     }
 
 
     /**
-     * Setup the dropdown spinner that allows the user to select the gender of the product.
+     * Setup the dropdown spinner that allows the user to select the grade of the product.
      */
     private void setupSpinner() {
         // Create adapter for spinner. The list options are from the String array it will use
         // the spinner will use the default layout
-        ArrayAdapter genderSpinnerAdapter = ArrayAdapter.createFromResource(this,
-                R.array.array_gender_options, android.R.layout.simple_spinner_item);
+        ArrayAdapter gradeSpinnerAdapter = ArrayAdapter.createFromResource(this,
+                R.array.array_grade_options, android.R.layout.simple_spinner_item);
 
         // Specify dropdown layout style - simple list view with 1 item per line
-        genderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        gradeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 
         // Apply the adapter to the spinner
-        mGenderSpinner.setAdapter(genderSpinnerAdapter);
+        mGradeSpinner.setAdapter(gradeSpinnerAdapter);
 
         // Set the integer mSelected to the constant values
-        mGenderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mGradeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selection = (String) parent.getItemAtPosition(position);
                 if (!TextUtils.isEmpty(selection)) {
-                    if (selection.equals(getString(R.string.gender_male))) {
-                        mGender = PetEntry.GENDER_MALE;
-                    } else if (selection.equals(getString(R.string.gender_female))) {
-                        mGender = PetEntry.GENDER_FEMALE;
+                    if (selection.equals(getString(R.string.grade_new))) {
+                        mGrade = ProductEntry.GRADE_NEW;
+                    } else if (selection.equals(getString(R.string.grade_used))) {
+                        mGrade = ProductEntry.GRADE_USED;
                     } else {
-                        mGender = PetEntry.GENDER_UNKNOWN;
+                        mGrade = ProductEntry.GRADE_UNKNOWN;
                     }
                 }
             }
@@ -181,7 +182,7 @@ public class EditorActivity extends AppCompatActivity implements
             // Because AdapterView is an abstract class, onNothingSelected must be defined
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                mGender = PetEntry.GENDER_UNKNOWN;
+                mGrade = ProductEntry.GRADE_UNKNOWN;
             }
         });
     }
@@ -189,18 +190,18 @@ public class EditorActivity extends AppCompatActivity implements
     /**
      * Get user input from editor and save product into database.
      */
-    private void savePet() {
+    private void saveProduct() {
         // Read from input fields
         // Use trim to eliminate leading or trailing white space
         String nameString = mNameEditText.getText().toString().trim();
-        String breedString = mBreedEditText.getText().toString().trim();
-        String weightString = mWeightEditText.getText().toString().trim();
+        String modelString = mModelEditText.getText().toString().trim();
+        String quantityString = mQuantityEditText.getText().toString().trim();
 
         // Check if this is supposed to be a new product
         // and check if all the fields in the editor are blank
-        if (mCurrentPetUri == null &&
-                TextUtils.isEmpty(nameString) && TextUtils.isEmpty(breedString) &&
-                TextUtils.isEmpty(weightString) && mGender == PetEntry.GENDER_UNKNOWN) {
+        if (mCurrentProductUri == null &&
+                TextUtils.isEmpty(nameString) && TextUtils.isEmpty(modelString) &&
+                TextUtils.isEmpty(quantityString) && mGrade == ProductEntry.GRADE_UNKNOWN) {
             // Since no fields were modified, we can return early without creating a new product.
             // No need to create ContentValues and no need to do any ContentProvider operations.
             return;
@@ -209,23 +210,23 @@ public class EditorActivity extends AppCompatActivity implements
         // Create a ContentValues object where column names are the keys,
         // and product attributes from the editor are the values.
         ContentValues values = new ContentValues();
-        values.put(PetEntry.COLUMN_PET_NAME, nameString);
-        values.put(PetEntry.COLUMN_PET_BREED, breedString);
-        values.put(PetEntry.COLUMN_PET_GENDER, mGender);
+        values.put(ProductEntry.COLUMN_PRODUCT_NAME, nameString);
+        values.put(ProductEntry.COLUMN_PRODUCT_MODEL, modelString);
+        values.put(ProductEntry.COLUMN_PRODUCT_GRADE, mGrade);
 
-        // If the weight is not provided by the user, don't try to parse the string into an
+        // If the quantity is not provided by the user, don't try to parse the string into an
         // integer value. Use 0 by default.
-        int weight = 0;
-        if (!TextUtils.isEmpty(weightString)) {
-            weight = Integer.parseInt(weightString);
+        int quantity = 0;
+        if (!TextUtils.isEmpty(quantityString)) {
+            quantity = Integer.parseInt(quantityString);
         }
-        values.put(PetEntry.COLUMN_PET_WEIGHT, weight);
+        values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, quantity);
 
-        // Determine if this is a new or existing product by checking if mCurrentPetUri is null or not
-        if (mCurrentPetUri == null) {
+        // Determine if this is a new or existing product by checking if mCurrentProductUri is null or not
+        if (mCurrentProductUri == null) {
             // This is a NEW product, so insert a new product into the provider,
             // returning the content URI for the new product.
-            Uri newUri = getContentResolver().insert(PetEntry.CONTENT_URI, values);
+            Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
 
             // Show a toast message depending on whether or not the insertion was successful.
             if (newUri == null) {
@@ -238,11 +239,11 @@ public class EditorActivity extends AppCompatActivity implements
                         Toast.LENGTH_SHORT).show();
             }
         } else {
-            // Otherwise this is an EXISTING product, so update the product with content URI: mCurrentPetUri
+            // Otherwise this is an EXISTING product, so update the product with content URI: mCurrentProductUri
             // and pass in the new ContentValues. Pass in null for the selection and selection args
-            // because mCurrentPetUri will already identify the correct row in the database that
+            // because mCurrentProductUri will already identify the correct row in the database that
             // we want to modify.
-            int rowsAffected = getContentResolver().update(mCurrentPetUri, values, null, null);
+            int rowsAffected = getContentResolver().update(mCurrentProductUri, values, null, null);
 
             // Show a toast message depending on whether or not the update was successful.
             if (rowsAffected == 0) {
@@ -269,7 +270,7 @@ public class EditorActivity extends AppCompatActivity implements
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         // If this is a new product, hide the "Delete" menu item.
-        if (mCurrentPetUri == null) {
+        if (mCurrentProductUri == null) {
             MenuItem menuItem = menu.findItem(R.id.action_delete);
             menuItem.setVisible(false);
         }
@@ -283,7 +284,7 @@ public class EditorActivity extends AppCompatActivity implements
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
                 // Save product to database
-                savePet();
+                saveProduct();
                 // Exit activity
                 finish();
                 return true;
@@ -296,7 +297,7 @@ public class EditorActivity extends AppCompatActivity implements
             case android.R.id.home:
                 // If the product hasn't changed, continue with navigating up to parent activity
                 // which is the {@link CatalogActivity}.
-                if (!mPetHasChanged) {
+                if (!mProductHasChanged) {
                     NavUtils.navigateUpFromSameTask(EditorActivity.this);
                     return true;
                 }
@@ -326,7 +327,7 @@ public class EditorActivity extends AppCompatActivity implements
     @Override
     public void onBackPressed() {
         // If the product hasn't changed, continue with handling back button press
-        if (!mPetHasChanged) {
+        if (!mProductHasChanged) {
             super.onBackPressed();
             return;
         }
@@ -352,15 +353,15 @@ public class EditorActivity extends AppCompatActivity implements
         // Since the editor shows all product attributes, define a projection that contains
         // all columns from the product table
         String[] projection = {
-                PetEntry._ID,
-                PetEntry.COLUMN_PET_NAME,
-                PetEntry.COLUMN_PET_BREED,
-                PetEntry.COLUMN_PET_GENDER,
-                PetEntry.COLUMN_PET_WEIGHT};
+                ProductEntry._ID,
+                ProductEntry.COLUMN_PRODUCT_NAME,
+                ProductEntry.COLUMN_PRODUCT_MODEL,
+                ProductEntry.COLUMN_PRODUCT_GRADE,
+                ProductEntry.COLUMN_PRODUCT_QUANTITY};
 
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,   // Parent activity context
-                mCurrentPetUri,         // Query the content URI for the current product
+                mCurrentProductUri,         // Query the content URI for the current product
                 projection,             // Columns to include in the resulting Cursor
                 null,                   // No selection clause
                 null,                   // No selection arguments
@@ -378,34 +379,34 @@ public class EditorActivity extends AppCompatActivity implements
         // (This should be the only row in the cursor)
         if (cursor.moveToFirst()) {
             // Find the columns of product attributes that we're interested in
-            int nameColumnIndex = cursor.getColumnIndex(PetEntry.COLUMN_PET_NAME);
-            int breedColumnIndex = cursor.getColumnIndex(PetEntry.COLUMN_PET_BREED);
-            int genderColumnIndex = cursor.getColumnIndex(PetEntry.COLUMN_PET_GENDER);
-            int weightColumnIndex = cursor.getColumnIndex(PetEntry.COLUMN_PET_WEIGHT);
+            int nameColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_NAME);
+            int modelColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_MODEL);
+            int gradeColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_GRADE);
+            int quantityColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_QUANTITY);
 
             // Extract out the value from the Cursor for the given column index
             String name = cursor.getString(nameColumnIndex);
-            String breed = cursor.getString(breedColumnIndex);
-            int gender = cursor.getInt(genderColumnIndex);
-            int weight = cursor.getInt(weightColumnIndex);
+            String model = cursor.getString(modelColumnIndex);
+            int grade = cursor.getInt(gradeColumnIndex);
+            int quantity = cursor.getInt(quantityColumnIndex);
 
             // Update the views on the screen with the values from the database
             mNameEditText.setText(name);
-            mBreedEditText.setText(breed);
-            mWeightEditText.setText(Integer.toString(weight));
+            mModelEditText.setText(model);
+            mQuantityEditText.setText(Integer.toString(quantity));
 
-            // Gender is a dropdown spinner, so map the constant value from the database
+            // Grade is a dropdown spinner, so map the constant value from the database
             // into one of the dropdown options (0 is Unknown, 1 is Male, 2 is Female).
             // Then call setSelection() so that option is displayed on screen as the current selection.
-            switch (gender) {
-                case PetEntry.GENDER_MALE:
-                    mGenderSpinner.setSelection(1);
+            switch (grade) {
+                case ProductEntry.GRADE_NEW:
+                    mGradeSpinner.setSelection(1);
                     break;
-                case PetEntry.GENDER_FEMALE:
-                    mGenderSpinner.setSelection(2);
+                case ProductEntry.GRADE_USED:
+                    mGradeSpinner.setSelection(2);
                     break;
                 default:
-                    mGenderSpinner.setSelection(0);
+                    mGradeSpinner.setSelection(0);
                     break;
             }
         }
@@ -415,9 +416,9 @@ public class EditorActivity extends AppCompatActivity implements
     public void onLoaderReset(Loader<Cursor> loader) {
         // If the loader is invalidated, clear out all the data from the input fields.
         mNameEditText.setText("");
-        mBreedEditText.setText("");
-        mWeightEditText.setText("");
-        mGenderSpinner.setSelection(0); // Select "Unknown" gender
+        mModelEditText.setText("");
+        mQuantityEditText.setText("");
+        mGradeSpinner.setSelection(0); // Select "Unknown" grade
     }
 
     /**
@@ -460,7 +461,7 @@ public class EditorActivity extends AppCompatActivity implements
         builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Delete" button, so delete the product.
-                deletePet();
+                deleteProduct();
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -481,13 +482,13 @@ public class EditorActivity extends AppCompatActivity implements
     /**
      * Perform the deletion of the product in the database.
      */
-    private void deletePet() {
+    private void deleteProduct() {
         // Only perform the delete if this is an existing product.
-        if (mCurrentPetUri != null) {
+        if (mCurrentProductUri != null) {
             // Call the ContentResolver to delete the product at the given content URI.
-            // Pass in null for the selection and selection args because the mCurrentPetUri
+            // Pass in null for the selection and selection args because the mCurrentProductUri
             // content URI already identifies the product that we want.
-            int rowsDeleted = getContentResolver().delete(mCurrentPetUri, null, null);
+            int rowsDeleted = getContentResolver().delete(mCurrentProductUri, null, null);
 
             // Show a toast message depending on whether or not the delete was successful.
             if (rowsDeleted == 0) {

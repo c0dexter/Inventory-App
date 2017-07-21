@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-import com.example.android.product.data.PetContract;
+import com.example.android.product.data.ProductContract;
 
 
 /**
@@ -17,19 +17,19 @@ import com.example.android.product.data.PetContract;
  */
 
 /**
- * {@link PetCursorAdapter} is an adapter for a list or grid view
+ * {@link ProductCursorAdapter} is an adapter for a list or grid view
  * that uses a {@link Cursor} of product data as its data source. This adapter knows
  * how to create list items for each row of product data in the {@link Cursor}.
  */
-public class PetCursorAdapter extends CursorAdapter {
+public class ProductCursorAdapter extends CursorAdapter {
 
     /**
-     * Constructs a new {@link PetCursorAdapter}.
+     * Constructs a new {@link ProductCursorAdapter}.
      *
      * @param context The context
      * @param c       The cursor from which to get the data.
      */
-    public PetCursorAdapter(Context context, Cursor c) {
+    public ProductCursorAdapter(Context context, Cursor c) {
         super(context, c, 0 /* flags */);
     }
 
@@ -64,21 +64,21 @@ public class PetCursorAdapter extends CursorAdapter {
         TextView summaryTextView = (TextView) view.findViewById(R.id.summary);
 
         // Find the columns of product attributes that we're interested in
-        int nameColumnIndex = cursor.getColumnIndex(PetContract.PetEntry.COLUMN_PET_NAME);
-        int breedColumnIndex = cursor.getColumnIndex(PetContract.PetEntry.COLUMN_PET_BREED);
+        int nameColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME);
+        int modelColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_MODEL);
 
         // Read the product attributes from the Cursor for the current product
         String productName = cursor.getString(nameColumnIndex);
-        String productBreed = cursor.getString(breedColumnIndex);
+        String productModel = cursor.getString(modelColumnIndex);
 
-        // If the product breed is empty string or null, then use some default text
-        // that says "Unknown breed", so the TextView isn't blank.
-        if (TextUtils.isEmpty(productBreed)) {
-            productBreed = context.getString(R.string.unknown_breed);
+        // If the product model is empty string or null, then use some default text
+        // that says "Unknown model", so the TextView isn't blank.
+        if (TextUtils.isEmpty(productModel)) {
+            productModel = context.getString(R.string.unknown_model);
         }
 
         // Update the TextViews with the attributes for the current product
         nameTextView.setText(productName);
-        summaryTextView.setText(productBreed);
+        summaryTextView.setText(productModel);
     }
 }

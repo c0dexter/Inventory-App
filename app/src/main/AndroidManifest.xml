@@ -37,7 +37,7 @@
         </activity>
 
         <provider
-            android:name="com.example.android.product.data.PetProvider"
+            android:name="com.example.android.product.data.ProductProvider"
             android:authorities="com.example.android.product"
             android:exported="false" />
     </application>
