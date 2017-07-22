@@ -34,7 +34,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -61,10 +63,36 @@ public class EditorActivity extends AppCompatActivity implements
      */
     private EditText mNameEditText;
 
+
     /**
      * EditText field to enter the product's model
      */
     private EditText mModelEditText;
+
+    /**
+     * EditText field to enter the product's grade
+     */
+    private Spinner mGradeSpinner;
+
+    /**
+     * ImageView field to enter the product's photo
+     */
+    private ImageView mPhoto;
+
+    /**
+     * EditText field to enter the product's price
+     */
+    private EditText mPrice;
+
+    /**
+     * EditText field to enter the supplier's namee
+     */
+    private EditText mSupplierName;
+
+    /**
+     * EditText field to enter the supplier's e-mail
+     */
+    private EditText mSupplierEmail;
 
     /**
      * EditText field to enter the product's quantity
@@ -72,9 +100,15 @@ public class EditorActivity extends AppCompatActivity implements
     private EditText mQuantityEditText;
 
     /**
-     * EditText field to enter the product's grade
+     * Button ADD PRODUCT to increasing amount of product in the storehouse
      */
-    private Spinner mGradeSpinner;
+    private Button mAddProductButton;
+
+    /**
+     * Button REJECT PRODUCT to decreasing amount of product in the storehouse
+     */
+    private Button mRejectProductButton;
+
 
     /**
      * Grade of the product. The possible valid values are in the ProductContract.java file:
@@ -129,11 +163,18 @@ public class EditorActivity extends AppCompatActivity implements
             getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, this);
         }
 
-        // Find all relevant views that we will need to read user input from //TODO: Zmapuj ziomeczQ kolejne pola z ekranu edycji
+        // Find all relevant views that we will need to read user input from
         mNameEditText = (EditText) findViewById(R.id.edit_product_name);
         mModelEditText = (EditText) findViewById(R.id.edit_product_model);
         mQuantityEditText = (EditText) findViewById(R.id.edit_product_quantity);
         mGradeSpinner = (Spinner) findViewById(R.id.spinner_grade);
+        mPhoto = (ImageView) findViewById(R.id.edit_product_photo);
+        mPrice = (EditText) findViewById(R.id.edit_product_price);
+        mSupplierName = (EditText) findViewById(R.id.edit_product_supplier_name);
+        mSupplierEmail = (EditText) findViewById(R.id.edit_product_supplier_email);
+        mAddProductButton = (Button) findViewById(R.id.addProductButton);
+        mRejectProductButton = (Button) findViewById(R.id.rejectProductButton);
+
 
 
         // Setup OnTouchListeners on all the input fields, so we can determine if the user
@@ -143,6 +184,12 @@ public class EditorActivity extends AppCompatActivity implements
         mModelEditText.setOnTouchListener(mTouchListener);
         mQuantityEditText.setOnTouchListener(mTouchListener);
         mGradeSpinner.setOnTouchListener(mTouchListener);
+        mPhoto.setOnTouchListener(mTouchListener);
+        mPrice.setOnTouchListener(mTouchListener);
+        mSupplierName.setOnTouchListener(mTouchListener);
+        mSupplierEmail.setOnTouchListener(mTouchListener);
+        mAddProductButton.setOnTouchListener(mTouchListener);
+        mRejectProductButton.setOnTouchListener(mTouchListener);
 
         setupSpinner();
     }
@@ -196,12 +243,22 @@ public class EditorActivity extends AppCompatActivity implements
         String nameString = mNameEditText.getText().toString().trim();
         String modelString = mModelEditText.getText().toString().trim();
         String quantityString = mQuantityEditText.getText().toString().trim();
+        String priceString = mPrice.getText().toString().trim();
+        String supplierNameString = mSupplierName.getText().toString().trim();
+        String supplierEmailString = mSupplierEmail.getText().toString().trim();
+
 
         // Check if this is supposed to be a new product
         // and check if all the fields in the editor are blank
         if (mCurrentProductUri == null &&
-                TextUtils.isEmpty(nameString) && TextUtils.isEmpty(modelString) &&
-                TextUtils.isEmpty(quantityString) && mGrade == ProductEntry.GRADE_UNKNOWN) {
+                TextUtils.isEmpty(nameString) &&
+                TextUtils.isEmpty(modelString) &&
+                TextUtils.isEmpty(quantityString) &&
+                mGrade == ProductEntry.GRADE_UNKNOWN &&
+                TextUtils.isEmpty(priceString) &&
+                TextUtils.isEmpty(supplierNameString) &&
+                //TextUtils.isEmpty((CharSequence) mPhoto) &&
+                TextUtils.isEmpty(supplierEmailString)) {
             // Since no fields were modified, we can return early without creating a new product.
             // No need to create ContentValues and no need to do any ContentProvider operations.
             return;
@@ -213,6 +270,10 @@ public class EditorActivity extends AppCompatActivity implements
         values.put(ProductEntry.COLUMN_PRODUCT_NAME, nameString);
         values.put(ProductEntry.COLUMN_PRODUCT_MODEL, modelString);
         values.put(ProductEntry.COLUMN_PRODUCT_GRADE, mGrade);
+        values.put(ProductEntry.COLUMN_PRODUCT_PRICE, priceString);
+        values.put(ProductEntry.COLUMN_SUPPLIER_NAME, supplierNameString);
+        values.put(ProductEntry.COLUMN_SUPPLIER_EMAIL, supplierEmailString);
+        values.put(ProductEntry.COLUMN_PRODUCT_PICTURE, "");
 
         // If the quantity is not provided by the user, don't try to parse the string into an
         // integer value. Use 0 by default.
@@ -357,7 +418,12 @@ public class EditorActivity extends AppCompatActivity implements
                 ProductEntry.COLUMN_PRODUCT_NAME,
                 ProductEntry.COLUMN_PRODUCT_MODEL,
                 ProductEntry.COLUMN_PRODUCT_GRADE,
-                ProductEntry.COLUMN_PRODUCT_QUANTITY};
+                ProductEntry.COLUMN_PRODUCT_PICTURE,
+                ProductEntry.COLUMN_PRODUCT_PRICE,
+                ProductEntry.COLUMN_SUPPLIER_NAME,
+                ProductEntry.COLUMN_SUPPLIER_EMAIL,
+                ProductEntry.COLUMN_PRODUCT_QUANTITY
+        };
 
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,   // Parent activity context
@@ -382,17 +448,31 @@ public class EditorActivity extends AppCompatActivity implements
             int nameColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_NAME);
             int modelColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_MODEL);
             int gradeColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_GRADE);
+            int pictureColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_PICTURE); //TODO: to ma być int czy String?
+            int priceColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_PRICE);
+            int supplierNameColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_SUPPLIER_NAME);
+            int supplierEmailColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_SUPPLIER_EMAIL);
             int quantityColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_QUANTITY);
 
             // Extract out the value from the Cursor for the given column index
             String name = cursor.getString(nameColumnIndex);
             String model = cursor.getString(modelColumnIndex);
             int grade = cursor.getInt(gradeColumnIndex);
+            String picture = cursor.getString(pictureColumnIndex); //TODO: ZROBIĆ OBSŁUGĘ ZDJĘĆ
+            String price = cursor.getString(priceColumnIndex);
+            String supplierName = cursor.getString(supplierNameColumnIndex);
+            String supplierEmail = cursor.getString(supplierEmailColumnIndex);
             int quantity = cursor.getInt(quantityColumnIndex);
+
 
             // Update the views on the screen with the values from the database
             mNameEditText.setText(name);
             mModelEditText.setText(model);
+
+            mPhoto.setImageResource(R.drawable.ic_empty_storehouse); // TODO: to jest przykład, załaduje ikonę
+            mPrice.setText(price);
+            mSupplierName.setText(supplierName);
+            mSupplierEmail.setText(supplierEmail);
             mQuantityEditText.setText(Integer.toString(quantity));
 
             // Grade is a dropdown spinner, so map the constant value from the database
@@ -417,6 +497,10 @@ public class EditorActivity extends AppCompatActivity implements
         // If the loader is invalidated, clear out all the data from the input fields.
         mNameEditText.setText("");
         mModelEditText.setText("");
+        mPhoto.setImageResource(R.drawable.ic_empty_storehouse); // TODO: to jest przykład, załaduje ikonę
+        mPrice.setText("");
+        mSupplierName.setText("");
+        mSupplierEmail.setText("");
         mQuantityEditText.setText("");
         mGradeSpinner.setSelection(0); // Select "Unknown" grade
     }
