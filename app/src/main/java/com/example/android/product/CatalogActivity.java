@@ -109,13 +109,13 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
         // Create a ContentValues object where column names are the keys,
         // and example's product attributes are the values.
         ContentValues values = new ContentValues();
-        values.put(ProductEntry.COLUMN_PRODUCT_NAME, "SONY");
-        values.put(ProductEntry.COLUMN_PRODUCT_MODEL, "EXAMPLE-J34AL");
+        values.put(ProductEntry.COLUMN_PRODUCT_NAME, getString(R.string.dummy_data_product_name));
+        values.put(ProductEntry.COLUMN_PRODUCT_MODEL, getString(R.string.dummy_data_product_model));
         values.put(ProductEntry.COLUMN_PRODUCT_GRADE, ProductEntry.GRADE_NEW);
         values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, 7);
         values.put(ProductEntry.COLUMN_PRODUCT_PICTURE, String.valueOf(imageUri));
-        values.put(ProductEntry.COLUMN_SUPPLIER_EMAIL, "orders.storehouse@sony.com");
-        values.put(ProductEntry.COLUMN_SUPPLIER_NAME, "John Doe");
+        values.put(ProductEntry.COLUMN_SUPPLIER_EMAIL, getString(R.string.dummy_data_supplier_email));
+        values.put(ProductEntry.COLUMN_SUPPLIER_NAME, getString(R.string.dummy_data_supplier_name));
         values.put(ProductEntry.COLUMN_PRODUCT_PRICE, 49.99);
 
         // Insert a new row for Toto into the provider using the ContentResolver.
@@ -150,7 +150,8 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
                 ProductEntry.COLUMN_PRODUCT_NAME,
                 ProductEntry.COLUMN_PRODUCT_MODEL,
                 ProductEntry.COLUMN_PRODUCT_QUANTITY,
-                ProductEntry.COLUMN_PRODUCT_PRICE //TODO: zobacz ziomek, czy coś jeszcze ma być na Liście (ListView) wyswietlone
+                ProductEntry.COLUMN_PRODUCT_PRICE,
+                ProductEntry.COLUMN_PRODUCT_PICTURE
         };
 
         // This loader will execute the ContentProvider's query method ona background thread

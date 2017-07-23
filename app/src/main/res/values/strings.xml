@@ -117,7 +117,7 @@
     <string name="hint_email_supplier">john.doe@supplier.com</string>
 
     <!-- Currency symbol for the price field -->
-    <string name="currency_symbol">$</string>
+    <string name="currency_symbol">€</string>
 
     <!-- Hint for the price field -->
     <string name="price_hint_editor_activity">28.99</string>
@@ -144,5 +144,19 @@
     <string name="validation_msg_product_quantity">Quantity is required</string>
     <string name="validation_msg_product_price">Price is required</string>
     <string name="validation_msg_product_image">Photo of product is required</string>
+    <string name="error_msg_stock_update">Issue with upload value of quantity</string>
+    <string name="buy_msg_confirm">Item has been sold</string>
+    <string name="no_product_in_stock">No available product in stock</string>
+    <string name="in_stock">In stock:</string>
+    <string name="pcs_unit">pcs</string>
+    <string name="euro_currency_sign">€</string>
+    <string name="example_model">DMC-370ZX</string>
+    <string name="example_name_of_item">Sony</string>
+    <string name="example_price">199,99</string>
+    <string name="example_quantity">9</string>
+    <string name="dummy_data_product_name">SONY</string>
+    <string name="dummy_data_product_model">EXAMPLE-J34AL</string>
+    <string name="dummy_data_supplier_email">orders.storehouse@sony.com</string>
+    <string name="dummy_data_supplier_name">John Doe</string>
 
 </resources>

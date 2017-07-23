@@ -1,41 +1,130 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Layout for a single list item in the list of pets -->
+<?xml version="1.0" encoding="utf-8"?><!-- Layout for a single list item in the list of products -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:minHeight="100dp"
     android:orientation="horizontal"
-    android:padding="@dimen/activity_margin">
+    android:padding="@dimen/activity_margin"
+    android:descendantFocusability="blocksDescendants">
+
+    <ImageView
+        android:id="@+id/product_image"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/activity_margin"
+        android:layout_marginRight="@dimen/activity_margin"
+        android:layout_weight="3"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="4dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/product_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-medium"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="#2B3D4D"
+                tools:targetApi="jelly_bean"
+                tools:text="@string/example_name_of_item" />
+
+            <TextView
+                android:numeric="decimal"
+                android:id="@+id/product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginLeft="8dp"
+                android:fontFamily="sans-serif"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@color/colorAccent"
+                tools:text="@string/example_price" />
+
+            <TextView
+                android:numeric="decimal"
+                android:id="@+id/currency_sign"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:fontFamily="sans-serif"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@color/colorAccent"
+                android:text="@string/euro_currency_sign" />
+        </LinearLayout>
+
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/product_model"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="#2B3D4D" />
-
-        <TextView
-            android:id="@+id/summary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:fontFamily="sans-serif"
             android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="#AEB6BD" />
+            android:textColor="#AEB6BD"
+            tools:text="@string/example_model" />
 
-        <TextView
-            android:id="@+id/summary2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="#AEB6BD" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/stockAvailable"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="#AEB6BD"
+                android:text="@string/in_stock" />
+
+            <TextView
+                android:id="@+id/product_current_quantity"
+                android:layout_marginRight="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="#AEB6BD"
+                tools:text="@string/example_quantity" />
+
+            <TextView
+                android:id="@+id/stock_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="#AEB6BD"
+                android:text="@string/pcs_unit" />
+        </LinearLayout>
+
 
     </LinearLayout>
 
+    <ImageButton
+        android:id="@+id/product_buy_button"
+        android:focusableInTouchMode="true"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="@color/addButtonColor"
+        android:minWidth="60dp"
+        android:src="@drawable/ic_buy"
+        android:textColor="@android:color/white" />
 
 </LinearLayout>
