@@ -50,7 +50,7 @@
                         android:id="@+id/edit_product_name"
                         style="@style/EditorFieldStyle"
                         android:hint="@string/hint_product_name"
-                        android:inputType="textCapWords" />
+                        android:inputType="text" />
 
                     <!-- Model field -->
                     <EditText
@@ -187,7 +187,7 @@
                         android:id="@+id/edit_product_supplier_email"
                         style="@style/EditorFieldStyle"
                         android:hint="@string/hint_email_supplier"
-                        android:inputType="textCapWords" />
+                        android:inputType="textEmailAddress" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -202,8 +202,7 @@
                 <LinearLayout
                     android:id="@+id/container_measurement"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <!-- Label -->
