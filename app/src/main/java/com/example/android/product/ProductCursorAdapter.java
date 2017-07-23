@@ -126,18 +126,22 @@ public class ProductCursorAdapter extends CursorAdapter {
         // Subtract 1 from current value if quantity of product >= 1
         int newQuantityValue = (currentQuantityInStock >= 1) ? currentQuantityInStock - 1 : 0;
 
+        if (currentQuantityInStock == 0) {
+            Toast.makeText(context.getApplicationContext(), R.string.toast_out_of_stock_msg, Toast.LENGTH_SHORT).show();
+        }
+
         // Update table by using new value of quantity
         ContentValues contentValues = new ContentValues();
         contentValues.put(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY, newQuantityValue);
         int numRowsUpdated = context.getContentResolver().update(productUri, contentValues, null, null);
         if (numRowsUpdated > 0) {
-            Toast.makeText(context.getApplicationContext(), R.string.buy_msg_confirm, Toast.LENGTH_SHORT).show();
+            // Show error message in Logs with info about pass update.
+            Log.i(TAG, context.getString(R.string.buy_msg_confirm));
         } else {
             Toast.makeText(context.getApplicationContext(), R.string.no_product_in_stock, Toast.LENGTH_SHORT).show();
             // Show error message in Logs with info about fail update.
             Log.e(TAG, context.getString(R.string.error_msg_stock_update));
         }
-
 
 
     }

@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2016 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.example.android.product;
 
 import android.Manifest;
@@ -162,6 +147,8 @@ public class EditorActivity extends AppCompatActivity implements
         }
     };
 
+    // BOOLEAN status for required fields,TRUE if these fields have been populated
+    boolean hasAllRequiredValues = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -367,8 +354,7 @@ public class EditorActivity extends AppCompatActivity implements
      * Get user input from editor and save product into database.
      */
     private boolean saveProduct() {
-        // BOOLEAN status for required fields,TRUE if these fields have been populated
-        boolean hasAllRequiredValues = false;
+
 
         // Quantity of products
         int quantity;
@@ -402,7 +388,7 @@ public class EditorActivity extends AppCompatActivity implements
 
         // Create a ContentValues object where column names are the keys,
         // and product attributes from the editor are the values.
-        ContentValues values = new ContentValues(); //TODO: dodać IFy sprawdzające czy są wartości
+        ContentValues values = new ContentValues();
 
         // REQUIRED VALUES
         // Validation section
@@ -511,8 +497,10 @@ public class EditorActivity extends AppCompatActivity implements
             case R.id.action_save:
                 // Save product to database
                 saveProduct();
-                // Exit activity
-                finish();
+                if (hasAllRequiredValues == true) {
+                    // Exit activity
+                    finish();
+                }
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
@@ -666,7 +654,7 @@ public class EditorActivity extends AppCompatActivity implements
         // If the loader is invalidated, clear out all the data from the input fields.
         mNameEditText.setText("");
         mModelEditText.setText("");
-        mPhoto.setImageResource(R.drawable.ic_empty_storehouse); // TODO: to jest przykład, załaduje ikonę
+        mPhoto.setImageResource(R.drawable.ic_empty_storehouse);
         mPrice.setText("");
         mSupplierName.setText("");
         mSupplierEmail.setText("");
