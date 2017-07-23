@@ -1,5 +1,6 @@
 package com.example.android.product;
 
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -98,17 +99,24 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
 
     private void insertProduct() {
 
+        // Get Uri for example photo from drawable resource
+        Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
+                "://" + getResources().getResourcePackageName(R.drawable.example)
+                + '/' + getResources().getResourceTypeName(R.drawable.example) + '/' + getResources().getResourceEntryName(R.drawable.example));
+
+        Log.i(LOG_TAG, "Example photo uri: " + String.valueOf(imageUri));
+
         // Create a ContentValues object where column names are the keys,
         // and example's product attributes are the values.
         ContentValues values = new ContentValues();
-        values.put(ProductEntry.COLUMN_PRODUCT_NAME, "Sony");
-        values.put(ProductEntry.COLUMN_PRODUCT_MODEL, "DMC-J34AL");
+        values.put(ProductEntry.COLUMN_PRODUCT_NAME, "SONY");
+        values.put(ProductEntry.COLUMN_PRODUCT_MODEL, "EXAMPLE-J34AL");
         values.put(ProductEntry.COLUMN_PRODUCT_GRADE, ProductEntry.GRADE_NEW);
         values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, 7);
-        values.put(ProductEntry.COLUMN_PRODUCT_PICTURE, "picture");
-        values.put(ProductEntry.COLUMN_SUPPLIER_EMAIL, "test@mail.com");
-        values.put(ProductEntry.COLUMN_SUPPLIER_NAME, "Pan Bronek");
-        values.put(ProductEntry.COLUMN_PRODUCT_PRICE, 5);
+        values.put(ProductEntry.COLUMN_PRODUCT_PICTURE, String.valueOf(imageUri));
+        values.put(ProductEntry.COLUMN_SUPPLIER_EMAIL, "orders.storehouse@sony.com");
+        values.put(ProductEntry.COLUMN_SUPPLIER_NAME, "John Doe");
+        values.put(ProductEntry.COLUMN_PRODUCT_PRICE, 49.99);
 
         // Insert a new row for Toto into the provider using the ContentResolver.
         // Use the {@link ProductEntry#CONTENT_URI} to indicate that we want to insert

@@ -35,7 +35,7 @@
     <string name="product_grade">Product grade</string>
 
     <!-- Label for measurement information in the editor [CHAR LIMIT=30] -->
-    <string name="category_measurement">Measurement</string>
+    <string name="category_measurement">Quantity</string>
 
     <!-- Text hint for name field in the editor [CHAR LIMIT=30] -->
     <string name="hint_product_name">Product name</string>
@@ -101,11 +101,48 @@
     <!-- Dialog button text for the option to cancel deletion of the current product [CHAR LIMIT=20] -->
     <string name="cancel">Cancel</string>
 
-    <!-- Label for the product's model if the model is unknown [CHAR LIMIT=20] -->
-    <string name="unknown_model">Unknown type</string>
+    <!-- Label for the product's model if the model is unknown -->
+    <string name="unknown_model">Unknown model</string>
+
+    <!-- Label for the product's photo -->
     <string name="product_photo">Photo</string>
+
+    <!-- Label for the product's supplier -->
     <string name="supplier">Supplier</string>
+
+    <!-- Hint for the supplier's name -->
     <string name="hint_supplier_name">John Doe</string>
+
+    <!-- Hint for the supplier's e-mail -->
     <string name="hint_email_supplier">john.doe@supplier.com</string>
+
+    <!-- Currency symbol for the price field -->
+    <string name="currency_symbol">$</string>
+
+    <!-- Hint for the price field -->
+    <string name="price_hint_editor_activity">28.99</string>
+
+    <!-- Label hint for the add photo section. Visible if new product -->
+    <string name="add_photo_hint_text">Tap to add a photo</string>
+
+    <!-- Label hint for the add photo section. Visible if product is editing -->
+    <string name="edit_photo_hint_text">Tap to change a photo</string>
+
+    <!-- Type of files which can be selected (Add photo) -->
+    <string name="intent_type">image/*</string>
+
+    <!-- Label hint for the add photo section. Visible if new product -->
+    <string name="select_image">Select image</string>
+
+    <!-- Option for action menu, user can order more by sending e-mail-->
+    <string name="action_order_more">Order more</string>
+
+    <!-- Toast message: validation of product name field -->
+    <string name="validation_msg_product_name">Product name is required</string>
+
+    <!-- Toast message: validation of product quantity -->
+    <string name="validation_msg_product_quantity">Quantity is required</string>
+    <string name="validation_msg_product_price">Price is required</string>
+    <string name="validation_msg_product_image">Photo of product is required</string>
 
 </resources>

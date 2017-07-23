@@ -44,12 +44,12 @@ public final class ProductDbHelper extends SQLiteOpenHelper {
                 ProductContract.ProductEntry.TABLE_NAME + "(" +
                 ProductContract.ProductEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 ProductContract.ProductEntry.COLUMN_PRODUCT_NAME + " TEXT NOT NULL, " +
-                ProductContract.ProductEntry.COLUMN_PRODUCT_MODEL + " TEXT NOT NULL, " +
+                ProductContract.ProductEntry.COLUMN_PRODUCT_MODEL + " TEXT, " +
                 ProductContract.ProductEntry.COLUMN_PRODUCT_GRADE + " INTEGER NOT NULL, " +
                 ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE + " REAL NOT NULL, " +
                 ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME + " TEXT, " +
-                ProductContract.ProductEntry.COLUMN_SUPPLIER_EMAIL + " TEXT, " +
-                ProductContract.ProductEntry.COLUMN_PRODUCT_PICTURE + " TEXT, " +
+                ProductContract.ProductEntry.COLUMN_SUPPLIER_EMAIL + " TEXT NOT NULL, " +
+                ProductContract.ProductEntry.COLUMN_PRODUCT_PICTURE + " TEXT NOT NULL, " +
                 ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY + " INTEGER DEFAULT 0);";
         Log.v(LOG_TAG, SQL_CREATE_PRODUCTS_TABLE);
 
