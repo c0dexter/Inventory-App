@@ -1,14 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2016 The Android Open Source Project
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-          http://www.apache.org/licenses/LICENSE-2.0
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
--->
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Name for the application [CHAR LIMIT=12] -->
     <string name="app_name">Inventory App</string>
@@ -142,22 +132,56 @@
 
     <!-- Toast message: validation of product quantity -->
     <string name="validation_msg_product_quantity">Quantity is required</string>
+
+    <!-- Toast message: validation of product price -->
     <string name="validation_msg_product_price">Price is required</string>
+
+    <!-- Toast message: validation of product image -->
     <string name="validation_msg_product_image">Photo of product is required</string>
+
+    <!-- Toast message: validation of product quantity -->
     <string name="error_msg_stock_update">Issue with upload value of quantity</string>
+
+    <!-- Toast message about sold item -->
     <string name="buy_msg_confirm">Item has been sold</string>
+
+    <!-- Toast message: validation of missing product in stock -->
     <string name="no_product_in_stock">No available product in stock</string>
+
+    <!-- Label for stock -->
     <string name="in_stock">In stock:</string>
+
+    <!-- Label for unit -->
     <string name="pcs_unit">pcs</string>
+
+    <!-- Label for stock -->
     <string name="euro_currency_sign">€</string>
+
+    <!-- Example: model -->
     <string name="example_model">DMC-370ZX</string>
+
+    <!-- Example: name of item -->
     <string name="example_name_of_item">Sony</string>
+
+    <!-- Example: price of item -->
     <string name="example_price">199,99</string>
+
+    <!-- Example: quantity of item -->
     <string name="example_quantity">9</string>
+
+    <!-- Dummy data: name of item -->
     <string name="dummy_data_product_name">SONY</string>
+
+    <!-- Dummy data: model of item -->
     <string name="dummy_data_product_model">EXAMPLE-J34AL</string>
+
+    <!-- Dummy data: supplier e-mail -->
     <string name="dummy_data_supplier_email">orders.storehouse@sony.com</string>
+
+    <!-- Dummy data: supplier name -->
     <string name="dummy_data_supplier_name">John Doe</string>
+
+    <!-- Dummy data: model of item -->
     <string name="toast_out_of_stock_msg">Product is out of stock!</string>
 
 </resources>
