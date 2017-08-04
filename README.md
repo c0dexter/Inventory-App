@@ -1,5 +1,5 @@
-Inventory App
-===================================
+Inventory App - Project Specification
+=====================================
 
 
 
