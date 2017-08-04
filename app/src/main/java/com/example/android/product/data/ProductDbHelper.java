@@ -53,6 +53,9 @@ public final class ProductDbHelper extends SQLiteOpenHelper {
                 ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY + " INTEGER DEFAULT 0);";
         Log.v(LOG_TAG, SQL_CREATE_PRODUCTS_TABLE);
 
+        /**
+         * Create table
+         */
         db.execSQL(SQL_CREATE_PRODUCTS_TABLE);
     }
 
