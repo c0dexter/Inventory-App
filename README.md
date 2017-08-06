@@ -1,6 +1,7 @@
+[![N|Solid](http://i.imgur.com/EGUTmHQ.png)](http://i.imgur.com/EGUTmHQ.png)
+
 Inventory App - Project Specification
 =====================================
-
 
 
 #Layout
