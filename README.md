@@ -4,6 +4,8 @@ Inventory App - Project Specification
 =====================================
 
 
+<iframe width="480" height="270" src="https://www.youtube.com/embed/PNce2Okm6Xk" frameborder="0" allowfullscreen></iframe>
+
 #Layout
 ------------
 
