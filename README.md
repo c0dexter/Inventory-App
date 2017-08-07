@@ -1,10 +1,10 @@
-[![N|Solid](http://i.imgur.com/EGUTmHQ.png)](http://i.imgur.com/EGUTmHQ.png)
-
 Inventory App - Project Specification
 =====================================
 
+[![N|Solid](http://i.imgur.com/wQAT9wxm.png)](http://i.imgur.com/wQAT9wxm.png) [![N|Solid](http://i.imgur.com/sRCP2jWm.png)](http://i.imgur.com/sRCP2jWm.png) [![N|Solid](http://i.imgur.com/0CbtQ8Nm.png)](http://i.imgur.com/0CbtQ8Nm.png)  [![N|Solid](http://i.imgur.com/23YaKJFm.png)](http://i.imgur.com/23YaKJFm.png) 
 
-<iframe width="480" height="270" src="https://www.youtube.com/embed/PNce2Okm6Xk" frameborder="0" allowfullscreen></iframe>
+[![Watch the video](http://i.imgur.com/hNlwD27.png)](https://www.youtube.com/watch?v=PNce2Okm6Xk)
+
 
 #Layout
 ------------
